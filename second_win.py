@@ -1,7 +1,7 @@
 from PyQt5.QtCore import Qt,QTimer,QTime
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QLineEdit
 from instr import *
-
+from final_win import FinalWin
 
 class SecondWin(QWidget):
     def __init__(self):
@@ -18,9 +18,9 @@ class SecondWin(QWidget):
 
     def initUI(self):
         self.fio = QLabel(txt_hintname)
-        self.age = QLabel()
+        self.age = QLabel(txt_age)
         self.instruction1, self.instruction2, self.instruction3 = QLabel(), QLabel(), QLabel()
-        self.time = QLabel()
+        self.time = QLabel(txt_timer)
         self.button1, self.button2, self.button3, self.nextbutton = QPushButton(), QPushButton(), QPushButton(), QPushButton()
         self.fioedit, self.ageedit, self.check1, self.check2, self.check3 = QLineEdit(), QLineEdit(txt_hintage), QLineEdit(), QLineEdit(), QLineEdit()
         self.h_line = QHBoxLayout()
@@ -48,9 +48,12 @@ class SecondWin(QWidget):
         self.button1.clicked.connect(self.timer_test)
         self.button2.clicked.connect(self.timer_sits)
         self.button3.clicked.connect(self.timer_final)
-        #self.hide()
-        #self.tw = FinalWin()
-
+        self.nextbutton.clicked.connect(self.next_click)
+    
+    def next_click(self):    
+        self.hide()
+        self.tw = FinalWin()
+    
     def timer_test(self):
         global time
         time = QTime(0,1,0)
@@ -101,6 +104,3 @@ class SecondWin(QWidget):
             self.text_timer.setStyleSheet('color:rgb(0,0,0)')
         if time.toString('hh:mm:ss') == '00:00:00':
             self.timer.stop()
-app = QApplication([])
-sw = SecondWin()
-app.exec_()
