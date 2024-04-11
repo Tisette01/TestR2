@@ -1,4 +1,4 @@
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt,QTimer,QTime
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QLineEdit
 from instr import *
 
@@ -44,10 +44,63 @@ class SecondWin(QWidget):
         self.h_line.addLayout(self.r_line)
         self.setLayout(self.h_line)
 
-    def connects(self):
-        self.hide()
-        #self.tw = ThirdWin()
+    def connects(self):        
+        self.button1.clicked.connect(self.timer_test)
+        self.button2.clicked.connect(self.timer_sits)
+        self.button3.clicked.connect(self.timer_final)
+        #self.hide()
+        #self.tw = FinalWin()
 
+    def timer_test(self):
+        global time
+        time = QTime(0,1,0)
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.timer1Event)
+        self.timer.start(1000)
+    
+    def timer1Event(self):
+        global time
+        time = time.addSecs(-1)
+        self.text_timer.setText(time.toString('hh:mm:ss'))
+        self.text_timer.setFont(QFont('Times',36,QFont.Bold))
+        self.text_timer.setStyleSheet('color:rgb(0,0,0)')
+        if time.toString('hh:mm:ss') == '00:00:00':
+            self.timer.stop()
+
+    def timer_sits(self):
+        global time
+        time = QTime(0)
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.timer2Event)
+        self.timer.start(1500)
+
+
+    def timer2Event(self):
+        global time
+        time = time.addSecs(1)
+        self.text_timer.setText(time.toString('ss'))
+        self.text_timer.setFont(QFont('Times',36,QFont.Bold))
+        self.text_timer.setStyleSheet('color:rgb(0,0,0)')
+        if time.toString('ss') == '30':
+            self.timer.stop()
+    
+    def timer_final(self):
+        global time
+        time = QTime(0,1,0)
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.timer3Event)
+        self.timer.start(1000)
+    
+    def timer3Event(self):
+        global time
+        time = time.addSecs(-1)
+        self.text_timer.setText(time.toString('hh:mm:ss'))        
+        if int(time.toString('hh:mm:ss'[6:8]))>=45 or int(time.toString('hh:mm:ss'[6:8]))<=15:
+            self.text_timer.setStyleSheet('color:rgb(0,255,0)')
+        else:
+            self.text_timer.setStyleSheet('color:rgb(0,0,0)')
+        if time.toString('hh:mm:ss') == '00:00:00':
+            self.timer.stop()
 app = QApplication([])
 sw = SecondWin()
 app.exec_()
