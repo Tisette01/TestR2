@@ -19,9 +19,9 @@ class SecondWin(QWidget):
     def initUI(self):
         self.fio = QLabel(txt_hintname)
         self.age = QLabel(txt_age)
-        self.instruction1, self.instruction2, self.instruction3 = QLabel(), QLabel(), QLabel()
+        self.instruction1, self.instruction2, self.instruction3 = QLabel(txt_test1), QLabel(txt_test2), QLabel(txt_test3)
         self.time = QLabel(txt_timer)
-        self.button1, self.button2, self.button3, self.nextbutton = QPushButton(), QPushButton(), QPushButton(), QPushButton()
+        self.button1, self.button2, self.button3, self.nextbutton = QPushButton(txt_starttest1), QPushButton(txt_starttest2), QPushButton(txt_starttest3), QPushButton(txt_sendresults)
         self.fioedit, self.ageedit, self.check1, self.check2, self.check3 = QLineEdit(), QLineEdit(txt_hintage), QLineEdit(), QLineEdit(), QLineEdit()
         self.h_line = QHBoxLayout()
         self.r_line = QVBoxLayout()
